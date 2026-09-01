@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "explicit-agent"
+version = "0.1.0"
+description = "Minimal explicit agent development scaffold"
+requires-python = ">=3.8"
+
+[project.scripts]
+explicit-agent-init = "explicit_agent.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+explicit_agent = [
+    "template/**/*",
+    "template/.claude/**/*",
+]
