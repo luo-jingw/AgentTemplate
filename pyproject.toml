@@ -18,4 +18,5 @@ where = ["src"]
 explicit_agent = [
     "template/**/*",
     "template/.claude/**/*",
+    "migrations.json",
 ]

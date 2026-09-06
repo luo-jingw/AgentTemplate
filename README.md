@@ -2,7 +2,7 @@
 
 Minimal explicit agent development scaffold.
 
-After initialization, the copied files belong to the project. This tool does not update, sync, merge, or repair an existing project.
+After initialization, the copied files belong to the project. This tool does not update, sync, merge, or repair an existing project — bringing a project up to date with a newer template is a manual, agent-assisted procedure, defined in the copied `AGENTS.md` under "Template Ownership" and "Template Updates".
 
 ## Use
 
@@ -30,15 +30,21 @@ If any destination file already exists, the command changes nothing and prints t
 
 ```text
 AGENTS.md
+PROJECT.md
 plan.md
 issues.md
 opportunities.md
 docs/README.md
 .claude/skills/plan/SKILL.md
 .claude/skills/work/SKILL.md
+.claude/skills/experiment/SKILL.md
 .claude/skills/close/SKILL.md
 templates/module.md
 templates/pr.md
 ```
 
 Project-specific skills may be added under `.claude/skills/`. They stay in the project. They are not copied back to this repository.
+
+## Example
+
+`example/` is a snapshot of what `explicit-agent-init` currently produces — read it to see the template's output without running the command.
