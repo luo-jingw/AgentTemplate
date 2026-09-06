@@ -47,4 +47,4 @@ Project-specific skills may be added under `.claude/skills/`. They stay in the p
 
 ## Example
 
-`example/` is a snapshot of what `explicit-agent-init` currently produces — read it to see the template's output without running the command.
+`src/explicit_agent/template/` is copied verbatim — read it there to see what `explicit-agent-init` produces without running the command.
