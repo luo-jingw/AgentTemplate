@@ -45,6 +45,6 @@ templates/pr.md
 
 Project-specific skills may be added under `.claude/skills/`. They stay in the project. They are not copied back to this repository.
 
-## Example
+## Previewing the output
 
 `src/explicit_agent/template/` is copied verbatim — read it there to see what `explicit-agent-init` produces without running the command.
