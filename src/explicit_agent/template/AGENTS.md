@@ -101,6 +101,10 @@ Do not encode expected performance values as pass/fail assertions unless explici
 `plan.md`
 - Current approved work.
 - Structure, interfaces, flows, files, and implementation phases.
+- `Plan Status` is one of `proposed`, `approved`, `completed`.
+- Each phase's `Phase Status` is one of `pending`, `active`, `completed`,
+  `blocked`. Exactly one phase is `active` at a time, or none while the
+  plan is `proposed`.
 
 `issues.md`
 - Observed unresolved problems.
@@ -205,34 +209,59 @@ When asked to bring a project up to date with a newer template:
   template version.
 - If the project's copy was hand-edited despite the ownership rule,
   stop and report the conflict for that file. Do not silently overwrite
-  or merge it. From then on, that file's sync is the project's own
-  responsibility.
-- If the current template introduces a template-owned file the project
-  does not have, add it.
+  or merge it. Re-check on every future update — do not treat one
+  reported conflict as a lasting decision to stop syncing that file.
+- If the current template introduces a template-owned file whose path
+  does not exist in the project, add it.
+- If the current template introduces a template-owned file whose path
+  already exists in the project as a project-owned file (for example, a
+  project-specific skill later promoted to a default skill under the
+  same name), stop and report the ownership conflict. Do not add it.
 
 ### Project-owned files
 
-Never replace the content of a project-owned file. Only change it
-through the following two steps, in order.
+Never replace the content of a project-owned file.
+
+Project-owned files are either single-instance (one document: `PROJECT.md`,
+`plan.md`, a given file under `docs/`) or record-oriented (a file holding
+zero or more repeated blocks with the same heading names — currently
+`issues.md` and `opportunities.md`, each record starting with its own
+`# ISSUE-NNN` / `# OPT-NNN` heading). A heading only identifies a unique
+location in a single-instance file. Handle each kind differently.
+
+**Single-instance files** — change only through the following two steps,
+in order:
 
 1. **Apply pending migrations.** Read the template's `migrations.json`.
    Apply every entry with an `id` greater than the "Last applied
    migration id" recorded in `PROJECT.md`, in order, to the file it
-   names:
-   - `rename_section`: if the project's file has the `from` heading,
-     rename it to `to`. Keep all content under it unchanged.
-   - `delete_section`: if the project's file has this heading and its
-     content still matches the entry's `expected_blank` placeholder,
-     delete the section. If the content differs, do not delete it —
-     stop and report that the section is deprecated and needs a manual
-     decision.
-2. **Append new sections.** For each project-owned file, compare its
-   current headings against the current template's headings for that
-   file. Append any heading present in the template but missing from
-   the project's file, with the template's placeholder content, to the
-   end of the file. Do not reorder or touch existing headings.
+   names. An entry's `path` is the list of headings from the document
+   root down to the target heading, so `# Structure` → `## Modules` and
+   `# Code Mapping` → `## Modules` can be told apart:
+   - `rename_section`: if the project's file has a heading at `path`,
+     rename that heading (only) to `to`. Keep all content under it
+     unchanged.
+   - `delete_section`: if the project's file has a heading at `path`
+     and its content still matches the entry's `expected_blank`
+     placeholder, delete the section. If the content differs, do not
+     delete it — stop and report that the section is deprecated and
+     needs a manual decision.
+2. **Append new sections.** Compare the file's current top-level
+   heading structure against the current template's. Append any
+   heading present in the template but missing from the project's
+   file, with the template's placeholder content, to the end of the
+   file. Do not reorder or touch existing headings.
 
-After both steps, update `PROJECT.md`'s "Last synced to" and "Last
+**Record-oriented files** — do not run migrations or the append step on
+them. A heading like `## Evidence` repeats once per record, so neither a
+`path` nor a plain heading name identifies a single occurrence, and an
+automatic append cannot tell which record a new field belongs to. A
+change to the per-record schema (e.g. adding a field every future
+`ISSUE-NNN` should have) is a breaking template change: call it out
+explicitly instead of encoding it as a migration, and apply it by hand
+per project.
+
+After finishing, update `PROJECT.md`'s "Last synced to" and "Last
 applied migration id" to the current values.
 
 ## Skills
@@ -296,8 +325,11 @@ Stop and report the blocker when:
 - a required dependency or environment is unavailable;
 - a credential or environment identity is missing or ambiguous.
 
-This list is exhaustive. Completing a phase, a task, or a work unit is not
-a stop condition by itself.
+This list is exhaustive for ordinary implementation and planning work.
+Completing a phase, a task, or a work unit is not a stop condition by
+itself. A specific procedure in this file (for example, Template
+Updates) may define additional stop conditions scoped to its own
+workflow; those apply on top of this list, not instead of it.
 
 Once a plan is approved, continue executing its remaining phases without
 pausing for confirmation between them.

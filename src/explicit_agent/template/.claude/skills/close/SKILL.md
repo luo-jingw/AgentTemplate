@@ -11,6 +11,7 @@ Use at task or phase closure.
 
 Read:
 - current code diff;
+- `PROJECT.md`;
 - `plan.md`;
 - `issues.md`;
 - `opportunities.md`;
@@ -34,9 +35,12 @@ Verify:
 
 ## Plan
 
-Mark completed work accurately.
+Mark completed work accurately: set each finished phase's
+`Phase Status: completed`. If every phase is `completed`, set
+`Plan Status: completed`.
 
-Do not mark blocked or unverified work as complete.
+Do not mark blocked or unverified work as complete. Set `Phase Status:
+blocked` instead, with the blocker recorded in `issues.md`.
 
 ## Issues
 
@@ -90,6 +94,7 @@ Do not create the skill.
 
 Closure requires consistency between:
 - code;
+- `PROJECT.md`;
 - plan;
 - issues;
 - opportunities;

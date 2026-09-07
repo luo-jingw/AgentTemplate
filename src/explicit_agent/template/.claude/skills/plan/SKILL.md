@@ -17,6 +17,7 @@ Use this skill for:
 
 Read:
 - `AGENTS.md`;
+- `PROJECT.md`;
 - current `plan.md`;
 - relevant `issues.md`;
 - relevant `opportunities.md`;
@@ -84,6 +85,7 @@ A plan without complete file mapping is incomplete.
 ## Implementation Phases
 
 Each phase contains:
+- `Phase Status: pending`;
 - goal;
 - modified files;
 - new structures;
@@ -114,3 +116,6 @@ problem_defined
 → files_mapped
 → phases_observable
 → plan_closed
+
+When the user approves the plan, set `Plan Status: approved` in `plan.md`
+before starting `work`.

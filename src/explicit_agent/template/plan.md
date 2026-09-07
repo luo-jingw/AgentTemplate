@@ -1,3 +1,7 @@
+# Plan
+
+Plan Status: proposed
+
 # Problem
 
 ## Current
@@ -39,6 +43,8 @@
 # Implementation
 
 ## Phase 1
+
+Phase Status: pending
 
 ### Goal
 

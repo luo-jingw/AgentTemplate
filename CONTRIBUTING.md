@@ -24,8 +24,19 @@ structure to preserve. No migration entry is needed.
 
 Project-owned files (`PROJECT.md`, `plan.md`, `issues.md`,
 `opportunities.md`, non-README files under `docs/`) accumulate
-project-specific content that an update must not destroy. Changes to
-their skeleton are constrained:
+project-specific content that an update must not destroy. They split
+into two kinds, handled differently:
+
+- **Single-instance** (`PROJECT.md`, `plan.md`, a given `docs/` file):
+  one document, so a heading names a unique location — the tree of
+  headings from the document root down to a given heading is stable.
+- **Record-oriented** (`issues.md`, `opportunities.md`): zero or more
+  repeated blocks with the same heading names, each block starting
+  with its own `# ISSUE-NNN` / `# OPT-NNN` heading. A heading like
+  `## Evidence` occurs once per record, so no heading path identifies
+  a single occurrence across the whole file.
+
+### Single-instance files
 
 **Always allowed, no migration entry needed:**
 - Adding a new heading (`#`/`##`/`###`) that did not exist before.
@@ -41,17 +52,37 @@ in the pull request / commit description as a breaking change:**
   that changes its meaning (rewording for clarity is fine; changing
   what the section is asking for is not).
 
+### Record-oriented files
+
+No migration entry can target one record — a project may have any
+number of `ISSUE-NNN` / `OPT-NNN` blocks, unknown to the template in
+advance, and a `path` naming a heading inside one record does not
+generalize to the others. Do not write a `migrations.json` entry for
+these files.
+
+A change to the per-record schema (e.g. every future `ISSUE-NNN`
+should also have a `## Reproduction` field) is a breaking template
+change with no automatic update path. Call it out explicitly in the
+pull request / commit description; existing projects apply it by hand,
+per record, if they choose to.
+
 ## Adding a migration entry
 
 Append an entry to `src/explicit_agent/migrations.json`. Do not edit or
-remove past entries — the list is append-only history.
+remove past entries — the list is append-only history. Only for
+single-instance files (see above).
+
+`path` is the list of headings from the document root down to the
+target heading, in order — for example `["# Structure", "## Modules"]`
+distinguishes that heading from the unrelated `## Modules` under
+`# Code Mapping` in the same file.
 
 ```json
 {
   "id": "0001",
   "file": "PROJECT.md",
   "op": "rename_section",
-  "from": "## Old Heading",
+  "path": ["## Old Heading"],
   "to": "## New Heading"
 }
 ```
@@ -61,7 +92,7 @@ remove past entries — the list is append-only history.
   "id": "0002",
   "file": "PROJECT.md",
   "op": "delete_section",
-  "heading": "## Old Heading",
+  "path": ["## Old Heading"],
   "expected_blank": "<the exact placeholder text this heading previously carried>"
 }
 ```
@@ -69,7 +100,11 @@ remove past entries — the list is append-only history.
 Rules:
 - `id` is a zero-padded, monotonically increasing string across the
   whole file, regardless of which project-owned file the entry targets.
-- `file` is the path relative to a project's root.
+- `file` is the path relative to a project's root, and must name a
+  single-instance file.
+- `path` entries are heading text exactly as it appears in the
+  template (including the `#` markers), from the document root down to
+  the target heading.
 - `expected_blank` must be the exact placeholder text the section held
   before deletion, taken from the template version immediately prior to
   this change. It is what lets an update tell an untouched section
