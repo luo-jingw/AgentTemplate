@@ -119,6 +119,48 @@ Do not encode expected performance values as pass/fail assertions unless explici
 
 Do not store unresolved hypotheses in `docs/`.
 
+## Content Boundary for Persistent Documents
+
+A persistent document records facts, design, interfaces, constraints,
+rationale, and open questions within its own scope. It does not record
+how the user asked for it to be written.
+
+Write for a reader who was not in the conversation. The document must
+stand on its own and describe the current result directly.
+
+Do not record:
+- how the user phrased a request, e.g. "the user asked for...", "per
+  the user's comment...";
+- the writing process itself, e.g. "for discussion with
+  collaborators", "not elaborated here", "avoid over-engineering
+  here";
+- any of the above wrapped in parentheses, a blockquote, a preamble, a
+  footnote, or a side note.
+
+When a correction changes a concept or a piece of logic, update the
+affected text directly. Do not keep a trace of the conversation, such
+as "previously understood as..." or "now changed to...". Record
+decision history only where a log is explicitly required.
+
+A constraint that only governs the writer's behavior is followed, not
+written down. A constraint the system itself must satisfy is written
+down as the constraint, its scope, and the expected behavior — not as
+an instruction to the writer.
+
+Parentheses are for terminology, units, formula conditions, or
+citations only. Do not use them to smuggle in a writing instruction.
+
+Before writing a sentence, check it: does it describe the subject
+itself, or does it explain how a request was carried out? Delete the
+latter.
+
+| Do not write | Instead |
+|---|---|
+| "initial framework (not elaborating implementation here)" | "initial framework", matched to the actual level of detail |
+| "for discussion with collaborators, to be revised" | delete |
+| "observability (not visual similarity)" | define directly: "how available the information an action needs is in the model's input" |
+| "do not modify raw data" as a note to the writer | if it is a system constraint: "raw data is read-only; processed results are written to a separate version" |
+
 ## Template Ownership
 
 Every file copied from the `explicit-agent` template is either
