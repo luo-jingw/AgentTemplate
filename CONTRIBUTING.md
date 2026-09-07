@@ -6,6 +6,22 @@ version of the template can be updated safely and mechanically. The
 update procedure a project follows is defined in
 `src/explicit_agent/template/AGENTS.md` under "Template Updates".
 
+## Design philosophy
+
+This project is a small starting point, not a framework that manages
+projects at runtime (see README → "Scope"). It optimizes for staying
+small over anticipating every future need.
+
+When extending it:
+- Fix the specific gap in front of you. Do not build general machinery
+  — a schema validator, a state-machine engine, a full VCS-provenance
+  resolver — for a gap that has not actually been observed yet.
+- Prefer a documented manual procedure (stop, report, let a human or
+  the project's own agent decide) over an automated one, unless the
+  automated case is common enough to pay for the mechanism it needs.
+- A correct, well-argued suggestion to add mechanism is not by itself
+  a reason to add it. Weigh it against what this project actually is.
+
 ## File classes
 
 `src/explicit_agent/template/` files are either template-owned or
@@ -22,19 +38,27 @@ structure to preserve. No migration entry is needed.
 
 ## Project-owned files
 
-Project-owned files (`PROJECT.md`, `plan.md`, `issues.md`,
-`opportunities.md`, non-README files under `docs/`) accumulate
-project-specific content that an update must not destroy. They split
-into two kinds, handled differently:
+Project-owned files split by whether the template ships a skeleton for
+them (see `AGENTS.md` → "Template Ownership"):
 
-- **Single-instance** (`PROJECT.md`, `plan.md`, a given `docs/` file):
-  one document, so a heading names a unique location — the tree of
-  headings from the document root down to a given heading is stable.
-- **Record-oriented** (`issues.md`, `opportunities.md`): zero or more
-  repeated blocks with the same heading names, each block starting
-  with its own `# ISSUE-NNN` / `# OPT-NNN` heading. A heading like
-  `## Evidence` occurs once per record, so no heading path identifies
-  a single occurrence across the whole file.
+- **Project-created** (non-README files under `docs/`, project-specific
+  skills): nothing in the template corresponds to these. A template
+  update never touches them, so nothing below applies to them — there
+  is no schema to keep in sync.
+- **Template-seeded** (`PROJECT.md`, `plan.md`, `issues.md`,
+  `opportunities.md`): the template ships a starting version, so an
+  update can compare against it. These split further:
+  - **Single-instance** (`PROJECT.md`, `plan.md`): one document, so a
+    heading names a unique location — the tree of headings from the
+    document root down to a given heading is stable.
+  - **Record-oriented** (`issues.md`, `opportunities.md`): zero or
+    more repeated blocks with the same heading names, each block
+    starting with its own `# ISSUE-NNN` / `# OPT-NNN` heading. A
+    heading like `## Evidence` occurs once per record, so no heading
+    path identifies a single occurrence across the whole file.
+
+The rest of this section covers template-seeded, single-instance files
+only.
 
 ### Single-instance files
 
@@ -102,9 +126,12 @@ Rules:
   whole file, regardless of which project-owned file the entry targets.
 - `file` is the path relative to a project's root, and must name a
   single-instance file.
-- `path` entries are heading text exactly as it appears in the
-  template (including the `#` markers), from the document root down to
-  the target heading.
+- `path` entries are heading text (including the `#` markers), from
+  the document root down to the target heading, as the document looks
+  immediately before this migration is applied — i.e. after applying
+  every entry with a smaller `id`. For a `rename_section`, `path`
+  therefore names the pre-rename heading; the template's current
+  heading is `to`, not `path`.
 - `expected_blank` must be the exact placeholder text the section held
   before deletion, taken from the template version immediately prior to
   this change. It is what lets an update tell an untouched section

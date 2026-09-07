@@ -101,10 +101,17 @@ Do not encode expected performance values as pass/fail assertions unless explici
 `plan.md`
 - Current approved work.
 - Structure, interfaces, flows, files, and implementation phases.
-- `Plan Status` is one of `proposed`, `approved`, `completed`.
-- Each phase's `Phase Status` is one of `pending`, `active`, `completed`,
-  `blocked`. Exactly one phase is `active` at a time, or none while the
-  plan is `proposed`.
+- `Plan Status`: `proposed → approved → completed`.
+- Each phase's `Phase Status`:
+  - `pending → active`;
+  - `active → completed`;
+  - `active → blocked`;
+  - `blocked → active`, once the blocker is resolved;
+  - `blocked → (return to plan)`, if the blocker invalidates the plan.
+- At most one phase is `active`. A `blocked` phase blocks every later
+  `pending` phase from becoming `active` until it is resolved. Zero
+  phases are `active` while the plan is `proposed` or `completed`, or
+  while the only unresolved phase is `blocked`.
 
 `issues.md`
 - Observed unresolved problems.
@@ -177,13 +184,21 @@ Template-owned (defined by the template, not by this project):
 - `templates/pr.md`;
 - `docs/README.md`.
 
-Project-owned (accumulates project-specific content):
-- `PROJECT.md`;
-- `plan.md`;
-- `issues.md`;
-- `opportunities.md`;
-- every file under `docs/` other than `docs/README.md`;
-- every project-specific skill under `.claude/skills/` not listed above.
+Project-owned (accumulates project-specific content) splits further by
+whether the template ships a skeleton for it:
+
+- Template-seeded — the template ships a starting version, so a
+  template update can compare against it: `PROJECT.md`, `plan.md`,
+  `issues.md`, `opportunities.md`.
+- Project-created — nothing in the template corresponds to it; it
+  exists only because this project made it: every file under `docs/`
+  other than `docs/README.md`, and every project-specific skill under
+  `.claude/skills/` not listed under Template-owned above.
+
+Ownership (template-owned vs. project-owned) and update eligibility
+(template-seeded vs. project-created) are different questions. A file
+can be project-owned without having any template skeleton to sync
+against.
 
 Do not hand-edit a template-owned file to record project-specific
 content. Record it in `PROJECT.md`, `docs/`, `issues.md`, or
@@ -222,12 +237,16 @@ When asked to bring a project up to date with a newer template:
 
 Never replace the content of a project-owned file.
 
-Project-owned files are either single-instance (one document: `PROJECT.md`,
-`plan.md`, a given file under `docs/`) or record-oriented (a file holding
-zero or more repeated blocks with the same heading names — currently
-`issues.md` and `opportunities.md`, each record starting with its own
-`# ISSUE-NNN` / `# OPT-NNN` heading). A heading only identifies a unique
-location in a single-instance file. Handle each kind differently.
+Project-created files (see Template Ownership) have no template
+skeleton to sync against. Never touch them during a template update —
+not even the append step below.
+
+Template-seeded project-owned files are either single-instance
+(`PROJECT.md`, `plan.md`) or record-oriented (a file holding zero or
+more repeated blocks with the same heading names — `issues.md` and
+`opportunities.md`, each record starting with its own `# ISSUE-NNN` /
+`# OPT-NNN` heading). A heading only identifies a unique location in a
+single-instance file. Handle each kind differently.
 
 **Single-instance files** — change only through the following two steps,
 in order:
@@ -246,11 +265,13 @@ in order:
      placeholder, delete the section. If the content differs, do not
      delete it — stop and report that the section is deprecated and
      needs a manual decision.
-2. **Append new sections.** Compare the file's current top-level
-   heading structure against the current template's. Append any
-   heading present in the template but missing from the project's
-   file, with the template's placeholder content, to the end of the
-   file. Do not reorder or touch existing headings.
+2. **Append new sections.** Compare the file's current heading paths
+   against the current template's, path by path. For each path present
+   in the template but missing from the project's file: if its parent
+   path already exists in the project's file, insert it, with the
+   template's placeholder content, as the last child under that parent.
+   If it has no parent (a top-level heading), append it at the end of
+   the file. Do not reorder or touch existing headings.
 
 **Record-oriented files** — do not run migrations or the append step on
 them. A heading like `## Evidence` repeats once per record, so neither a

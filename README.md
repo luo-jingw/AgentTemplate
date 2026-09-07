@@ -2,7 +2,22 @@
 
 Minimal explicit agent development scaffold.
 
-After initialization, the copied files belong to the project. This tool does not update, sync, merge, or repair an existing project — bringing a project up to date with a newer template is a manual, agent-assisted procedure, defined in the copied `AGENTS.md` under "Template Ownership" and "Template Updates".
+## Scope
+
+This project hands a new project three things: a set of working
+conventions (`AGENTS.md`), a minimal skill vocabulary (`plan`, `work`,
+`experiment`, `close`), and a handful of blank persistent-state files.
+That is the whole product.
+
+It does not run inside a project, enforce its conventions, or validate
+a project's state at runtime. After initialization, the copied files
+belong to the project — how strictly they get followed, how ambiguity
+gets resolved, how the project grows its own skills, is up to the
+agent working in that project, not this tool. See the copied
+`AGENTS.md` for those conventions; this README and `CONTRIBUTING.md`
+are about the template itself, not about how to run a project.
+
+This tool does not update, sync, merge, or repair an existing project — bringing a project up to date with a newer template is a manual, agent-assisted procedure, defined in the copied `AGENTS.md` under "Template Ownership" and "Template Updates".
 
 ## Use
 

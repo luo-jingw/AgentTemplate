@@ -1,6 +1,6 @@
 ---
 name: work
-description: Execute an approved plan, investigate unexpected behavior, and perform controlled implementation or optimization work.
+description: Execute an approved plan phase, or a trivial local change that needs no plan; investigate unexpected behavior; perform controlled implementation or optimization work.
 ---
 
 # Trigger
@@ -16,7 +16,7 @@ Use when:
 Read:
 - `AGENTS.md`;
 - `PROJECT.md`;
-- active phase in `plan.md`;
+- active phase in `plan.md`, for planned work;
 - relevant source files;
 - relevant docs;
 - related open issues.
@@ -25,8 +25,10 @@ Read:
 
 For planned work:
 - `plan.md` has `Plan Status: approved`.
-- Exactly one phase has `Phase Status: active`, or one `pending` phase can
-  be set to `active` to start it.
+- A phase is `active`, or the next phase to work is `pending` and no
+  earlier phase in the plan is `blocked` (set it to `active` to start
+  it), or a `blocked` phase's blocker is resolved (set it back to
+  `active` to resume it).
 - Affected modules, files, interfaces, and state ownership are defined.
 - Affected source files can be inspected.
 
@@ -90,7 +92,10 @@ no `pending` phase remains, set `Plan Status: completed`.
 
 If a phase cannot proceed, set its `Phase Status` to `blocked` and
 follow the Stop Conditions below rather than leaving its status
-ambiguous.
+ambiguous. Do not activate a later `pending` phase while an earlier one
+is `blocked`. When the blocker is resolved, set the phase back to
+`active` and resume it; if the blocker invalidates the plan itself,
+return to `plan` instead.
 
 When a non-blocking issue appears, record it in `issues.md` and continue.
 Do not pause work to report it.
