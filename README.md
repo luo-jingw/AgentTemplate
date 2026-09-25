@@ -6,8 +6,8 @@ Minimal explicit agent development scaffold.
 
 This project hands a new project three things: a set of working
 conventions (`AGENTS.md`), a minimal skill vocabulary (`plan`, `work`,
-`experiment`, `close`), and a handful of blank persistent-state files.
-That is the whole product.
+`parallelize`, `experiment`, `close`), and a handful of blank
+persistent-state files. That is the whole product.
 
 It does not run inside a project, enforce its conventions, or validate
 a project's state at runtime. After initialization, the copied files
@@ -52,6 +52,7 @@ opportunities.md
 docs/README.md
 .claude/skills/plan/SKILL.md
 .claude/skills/work/SKILL.md
+.claude/skills/parallelize/SKILL.md
 .claude/skills/experiment/SKILL.md
 .claude/skills/close/SKILL.md
 templates/module.md

@@ -75,6 +75,18 @@ STOP
 
 Do not redesign in place.
 
+## Constraint Provenance
+
+A constraint recorded in a persistent file — a fixed parameter, a
+narrowed check range, a scope boundary — was correct for whoever wrote
+it, for the problem they had. It is not automatically still correct
+for the current top-level goal, especially if it predates the current
+task or was written by an earlier session.
+
+Before relying on a persisted constraint, check it against the current
+top-level goal. Do not inherit a narrower scope than the goal requires
+merely because a constraint already exists.
+
 ## Validation
 
 Prefer observational validation.
@@ -130,6 +142,20 @@ Do not encode expected performance values as pass/fail assertions unless explici
 
 Do not store unresolved hypotheses in `docs/`.
 
+## History Retention
+
+A persistent state file's job is to make current work legible, not to
+archive everything that has ever happened.
+
+If the project is under git version control, completed and resolved
+content in `plan.md`, `issues.md`, and `opportunities.md` does not need
+to stay in the file — git history already preserves it (`git log`,
+`git show`). Compact or remove it at `close` instead of letting the
+file grow without bound.
+
+If the project is not under git version control, keep it. There is no
+other durable record.
+
 ## Content Boundary for Persistent Documents
 
 A persistent document records facts, design, interfaces, constraints,
@@ -179,7 +205,7 @@ template-owned or project-owned. Never both.
 
 Template-owned (defined by the template, not by this project):
 - `AGENTS.md`;
-- the default skills: `.claude/skills/{plan,work,experiment,close}/SKILL.md`;
+- the default skills: `.claude/skills/{plan,work,parallelize,experiment,close}/SKILL.md`;
 - `templates/module.md`;
 - `templates/pr.md`;
 - `docs/README.md`.
@@ -290,6 +316,7 @@ applied migration id" to the current values.
 Default skills live in `.claude/skills/`:
 - `plan`
 - `work`
+- `parallelize`
 - `experiment`
 - `close`
 

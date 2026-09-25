@@ -42,9 +42,17 @@ Mark completed work accurately: set each finished phase's
 Do not mark blocked or unverified work as complete. Set `Phase Status:
 blocked` instead, with the blocker recorded in `issues.md`.
 
+If the project is under git version control and `Plan Status` is now
+`completed`, commit `plan.md` in its completed state, then reset it to
+the blank template for the next plan (see `AGENTS.md` → History
+Retention). If the project is not under git version control, leave the
+completed plan in place.
+
 ## Issues
 
-Close resolved issues.
+Close resolved issues: if the project is under git version control,
+remove the resolved entry from `issues.md` — git history preserves it.
+If it is not, set `Status: Resolved` and keep the entry.
 
 Record newly observed unresolved problems.
 
@@ -53,6 +61,10 @@ Record newly observed unresolved problems.
 Record future improvements that are not part of the current plan.
 
 Do not promote them automatically.
+
+Once an opportunity is promoted into a plan or explicitly rejected: if
+the project is under git version control, remove its entry from
+`opportunities.md`; if not, set its `Status` and keep it.
 
 ## Docs
 

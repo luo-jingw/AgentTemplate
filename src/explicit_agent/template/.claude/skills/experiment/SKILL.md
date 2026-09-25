@@ -51,7 +51,12 @@ List the variables that plausibly affect the outcome.
 
 For each variable, state the levels or values to test.
 
-Identify variables to hold fixed and record their fixed value.
+Identify variables to hold fixed and record their fixed value. Check
+each fixed value against the current top-level goal (see `AGENTS.md` →
+Constraint Provenance) rather than copying it from a prior plan,
+experiment, or instruction — a fixed value that quietly excludes
+something the goal requires testing is a correctness bug, not a
+convenience.
 
 ## Experiment Grid
 

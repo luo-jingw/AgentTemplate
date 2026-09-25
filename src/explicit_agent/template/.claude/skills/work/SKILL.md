@@ -85,6 +85,10 @@ When the question spans multiple variables or configurations, use the
 
 After a plan is approved, execute its phases continuously.
 
+If the active round holds two or more independent phases (see `plan`'s
+Implementation Phases), use the `parallelize` skill for that round
+instead of executing them one at a time here.
+
 Do not stop between phases to ask for confirmation. A completed phase is
 not a stop condition. When a phase finishes, set its `Phase Status` to
 `completed`, set the next `pending` phase to `active`, and continue. If
