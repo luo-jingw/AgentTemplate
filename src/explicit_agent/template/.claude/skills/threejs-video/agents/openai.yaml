@@ -1,0 +1,4 @@
+interface:
+  display_name: "Three.js 视频制作"
+  short_description: "制作 Three.js 讲解或演示视频，涵盖内容组织、本地配音、双语字幕、混音与成片验证"
+  default_prompt: "使用 $threejs-video，根据素材制作或修改带配音的 Three.js 视频。"

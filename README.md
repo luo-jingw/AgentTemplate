@@ -6,8 +6,8 @@ Minimal explicit agent development scaffold.
 
 This project hands a new project three things: a set of working
 conventions (`AGENTS.md`), a minimal skill vocabulary (`plan`, `work`,
-`parallelize`, `experiment`, `close`), and a handful of blank
-persistent-state files. That is the whole product.
+`parallelize`, `experiment`, `close`, `threejs-video`), and a handful
+of blank persistent-state files. That is the whole product.
 
 It does not run inside a project, enforce its conventions, or validate
 a project's state at runtime. After initialization, the copied files
@@ -55,6 +55,13 @@ docs/README.md
 .claude/skills/parallelize/SKILL.md
 .claude/skills/experiment/SKILL.md
 .claude/skills/close/SKILL.md
+.claude/skills/threejs-video/SKILL.md
+.claude/skills/threejs-video/agents/openai.yaml
+.claude/skills/threejs-video/references/content-contracts.md
+.claude/skills/threejs-video/references/evidence-rigor.md
+.claude/skills/threejs-video/references/production-pipeline.md
+.claude/skills/threejs-video/references/review-protocol.md
+.claude/skills/threejs-video/scripts/observe_timeline.py
 templates/module.md
 templates/pr.md
 ```

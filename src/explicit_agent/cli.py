@@ -22,8 +22,12 @@ def iter_template_files(root: Path) -> List[Path]:
         current = stack.pop()
         for entry in current.iterdir():
             if entry.is_dir():
+                if entry.name == "__pycache__":
+                    continue
                 stack.append(entry)
             elif entry.is_file():
+                if entry.suffix in (".pyc", ".pyo"):
+                    continue
                 files.append(entry)
     files.sort()
     return files
