@@ -8,12 +8,18 @@
   --teal-f:#E1F5EE;--teal-s:#0F6E56;--teal-t:#085041;--teal-t2:#0F6E56;
   --purple-f:#EEEDFE;--purple-s:#534AB7;--purple-t:#3C3489;--purple-t2:#534AB7;
   --coral-f:#FAECE7;--coral-s:#993C1D;--coral-t:#712B13;--coral-t2:#993C1D}
-@media (prefers-color-scheme:dark){:root{--fg:#ecebe6;--muted:#a3a29b;--card:#232321;--line:#3a3936;
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--fg:#ecebe6;--muted:#a3a29b;--card:#232321;--line:#3a3936;
   --box-f:#232321;--box-s:#5F5E5A;
   --gray-f:#444441;--gray-s:#B4B2A9;--gray-t:#F1EFE8;--gray-t2:#D3D1C7;
   --teal-f:#085041;--teal-s:#5DCAA5;--teal-t:#E1F5EE;--teal-t2:#9FE1CB;
   --purple-f:#3C3489;--purple-s:#AFA9EC;--purple-t:#EEEDFE;--purple-t2:#CECBF6;
   --coral-f:#712B13;--coral-s:#F0997B;--coral-t:#FAECE7;--coral-t2:#F5C4B3}}
+:root[data-theme="dark"]{--fg:#ecebe6;--muted:#a3a29b;--card:#232321;--line:#3a3936;
+  --box-f:#232321;--box-s:#5F5E5A;
+  --gray-f:#444441;--gray-s:#B4B2A9;--gray-t:#F1EFE8;--gray-t2:#D3D1C7;
+  --teal-f:#085041;--teal-s:#5DCAA5;--teal-t:#E1F5EE;--teal-t2:#9FE1CB;
+  --purple-f:#3C3489;--purple-s:#AFA9EC;--purple-t:#EEEDFE;--purple-t2:#CECBF6;
+  --coral-f:#712B13;--coral-s:#F0997B;--coral-t:#FAECE7;--coral-t2:#F5C4B3}
 figure{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:20px 0}
 figure svg{width:100%;height:auto;display:block}
 figcaption{font-size:13px;color:var(--muted);margin-top:8px}
@@ -57,6 +63,8 @@ svg .arr{stroke:var(--muted);stroke-width:1.2;fill:none}
 ```
 
 要点：彩色框的 `<rect>` 和框内 `<text>` 必须是同一个 `<g class="g-xxx">` 的子元素；中性框的文字可以放在 `g` 外面。
+
+深浅色除了跟随系统的 `prefers-color-scheme`，还响应显式的 `[data-theme="dark"/"light"]`（发布为 Artifact 等场景会由宿主在根元素上显式打这个属性，覆盖系统偏好）；两套规则共用同一组色值，不要只改一处。
 
 ## 图注与正文
 

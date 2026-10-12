@@ -6,9 +6,9 @@ Minimal explicit agent development scaffold.
 
 This project hands a new project three things: a set of working
 conventions (`AGENTS.md`), a minimal skill vocabulary (`plan`, `work`,
-`parallelize`, `experiment`, `close`, `threejs-video`, `diagram-svg`),
-and a handful of blank persistent-state files. That is the whole
-product.
+`parallelize`, `experiment`, `close`, `threejs-video`, `diagram-svg`,
+`report-deck`), and a handful of blank persistent-state files. That is
+the whole product.
 
 It does not run inside a project, enforce its conventions, or validate
 a project's state at runtime. After initialization, the copied files
@@ -67,6 +67,11 @@ docs/README.md
 .claude/skills/diagram-svg/references/visual-spec.md
 .claude/skills/diagram-svg/references/templates.md
 .claude/skills/diagram-svg/references/code-skeleton.md
+.claude/skills/report-deck/SKILL.md
+.claude/skills/report-deck/references/deck-structure.md
+.claude/skills/report-deck/references/content-blocks.md
+.claude/skills/report-deck/references/charts.md
+.claude/skills/report-deck/assets/deck-template.html
 templates/module.md
 templates/pr.md
 ```
