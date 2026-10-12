@@ -207,7 +207,7 @@ Template-owned (defined by the template, not by this project):
 - `AGENTS.md`;
 - the default skills and everything under their directories:
   `.claude/skills/{plan,work,parallelize,experiment,close}/SKILL.md`,
-  and every file under `.claude/skills/threejs-video/`;
+  and every file under `.claude/skills/{threejs-video,diagram-svg}/`;
 - `templates/module.md`;
 - `templates/pr.md`;
 - `docs/README.md`.
@@ -322,6 +322,7 @@ Default skills live in `.claude/skills/`:
 - `experiment`
 - `close`
 - `threejs-video`
+- `diagram-svg`
 
 Do not create a new skill for:
 - project state;
